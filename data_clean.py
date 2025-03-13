@@ -15,6 +15,20 @@ def whitespace_remover(dataframe):
             pass 
     
     return dataframe
+
+# Converts boolean values to '0' (false) or '1' (true) for pre-processing
+def convert_booleans(dataframe):
+    
+    for i in dataframe.columns:
+        
+        if dataframe[i].dtype == "bool":
+            
+            dataframe[i] = dataframe[i].apply(lambda x: int(x))
+            
+        else:
+            pass
+        
+    return dataframe
                  
 
 file_path = "online_shoppers_intention.csv"
@@ -24,9 +38,12 @@ df = pd.read_csv(file_path, delimiter=",", header=0).dropna().drop_duplicates()
 
 
 cleansed_df = whitespace_remover(df)
+processed_df = convert_booleans(cleansed_df)
+
+
 
 # Convert dataframe back to csv
-cleansed_df.to_csv('cleaned_data.csv', index=False)
+processed_df.to_csv('cleaned_data.csv', index=False)
 
 
 
